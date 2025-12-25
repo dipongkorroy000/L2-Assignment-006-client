@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDeleteUserMutation, useGetUserStatsQuery, useUserRoleUpdateMutation } from "@/redux/features/users/users.api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, UserPlus, ShieldCheck, Ban, UserX, UserCog } from "lucide-react";

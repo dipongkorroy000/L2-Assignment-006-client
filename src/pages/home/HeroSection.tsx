@@ -1,5 +1,3 @@
-
-
 interface Hero7Props {
   heading?: string;
   description?: string;
@@ -21,7 +19,6 @@ const HeroSection = ({
   heading = "Fast. Reliable. Delivered.",
   description = "Your parcels, documents, and essentials—picked up and delivered with care across Bangladesh.",
 }: Hero7Props) => {
-
   return (
     <section className="py-20">
       <div className="container text-center mx-auto">
