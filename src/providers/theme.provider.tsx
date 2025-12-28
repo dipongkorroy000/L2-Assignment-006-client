@@ -1,5 +1,5 @@
-import { ThemeProviderContext } from "@/context/theme.context";
-import { useEffect, useState } from "react";
+import {ThemeProviderContext} from "@/context/theme.context";
+import {useEffect, useState} from "react";
 
 export type Theme = "dark" | "light" | "system";
 
@@ -9,7 +9,7 @@ type ThemeProviderProps = {
   storageKey?: string;
 };
 
-export function ThemeProvider({ children, defaultTheme = "system", storageKey = "vite-ui-theme", ...props }: ThemeProviderProps) {
+export function ThemeProvider({children, defaultTheme = "system", storageKey = "vite-ui-theme", ...props}: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem(storageKey) as Theme) || defaultTheme);
 
   useEffect(() => {

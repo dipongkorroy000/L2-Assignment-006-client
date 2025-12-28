@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useDeleteUserMutation, useGetUserStatsQuery, useUserRoleUpdateMutation } from "@/redux/features/users/users.api";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, UserPlus, ShieldCheck, Ban, UserX, UserCog } from "lucide-react";
+import {useDeleteUserMutation, useGetUserStatsQuery, useUserRoleUpdateMutation} from "@/redux/features/users/users.api";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {Users, UserPlus, ShieldCheck, Ban, UserX, UserCog} from "lucide-react";
 
-import { useForm } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { TARoles } from "@/constants/role";
-import { toast } from "sonner";
+import {useForm} from "react-hook-form";
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
+import {Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from "@/components/ui/select";
+import {TARoles} from "@/constants/role";
+import {toast} from "sonner";
 
 const UserStats = () => {
-  const { data, isLoading } = useGetUserStatsQuery(undefined);
+  const {data, isLoading} = useGetUserStatsQuery(undefined);
   const [userRoleUpdate] = useUserRoleUpdateMutation();
   const [deleteUser] = useDeleteUserMutation();
   const stats = data?.data;
@@ -20,35 +20,35 @@ const UserStats = () => {
     register: registerRole,
     handleSubmit: handleSubmitRole,
     setValue: setRoleValue,
-    formState: { errors: roleErrors },
-  } = useForm<{ email: string; role: string }>();
+    formState: {errors: roleErrors},
+  } = useForm<{email: string; role: string}>();
 
   const {
     register: registerDelete,
     handleSubmit: handleSubmitDelete,
-    formState: { errors: deleteErrors },
-  } = useForm<{ email: string }>();
+    formState: {errors: deleteErrors},
+  } = useForm<{email: string}>();
 
-  const onUpdateRole = async (values: { email: string; role: string }) => {
+  const onUpdateRole = async (values: {email: string; role: string}) => {
     const toastId = toast.loading("Updating...");
 
     try {
       const res = await userRoleUpdate(values).unwrap();
-      if (res.success) toast.success(res.message, { id: toastId });
+      if (res.success) toast.success(res.message, {id: toastId});
       // ------
     } catch (error: any) {
-      toast.error(error.data.message, { id: toastId });
+      toast.error(error.data.message, {id: toastId});
     }
   };
 
-  const onDeleteUser = async (values: { email: string }) => {
+  const onDeleteUser = async (values: {email: string}) => {
     const toastId = toast.loading("Updating...");
     try {
       const res = await deleteUser(values).unwrap();
 
-      if (res.success) toast.success(res.message, { id: toastId });
+      if (res.success) toast.success(res.message, {id: toastId});
     } catch (error: any) {
-      toast.error(error.data.message, { id: toastId });
+      toast.error(error.data.message, {id: toastId});
     }
   };
 
@@ -112,7 +112,7 @@ const UserStats = () => {
           <CardContent className="text-2xl font-bold">{stats.totalBlockedUsers}</CardContent>
         </Card>
 
-        {stats.usersByRole?.map((roleStat: { count: number; _id: string }) => (
+        {stats.usersByRole?.map((roleStat: {count: number; _id: string}) => (
           <Card key={roleStat._id}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -132,7 +132,7 @@ const UserStats = () => {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmitRole(onUpdateRole)} className="space-y-4">
-              <Input type="email" placeholder="User Email" {...registerRole("email", { required: "Email is required" })} />
+              <Input type="email" placeholder="User Email" {...registerRole("email", {required: "Email is required"})} />
               {roleErrors.email && <p className="text-sm text-red-500">{roleErrors.email.message}</p>}
 
               <Select onValueChange={(value) => setRoleValue("role", value)}>
@@ -162,7 +162,7 @@ const UserStats = () => {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmitDelete(onDeleteUser)} className="space-y-4">
-              <Input type="email" placeholder="User Email" {...registerDelete("email", { required: "Email is required" })} />
+              <Input type="email" placeholder="User Email" {...registerDelete("email", {required: "Email is required"})} />
               {deleteErrors.email && <p className="text-sm text-red-500">{deleteErrors.email.message}</p>}
 
               <Button type="submit" variant="destructive" className="w-full cursor-pointer">

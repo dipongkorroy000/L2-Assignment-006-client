@@ -1,5 +1,5 @@
-import type { Theme } from "@/providers/theme.provider";
-import { createContext } from "react";
+import type {Theme} from "@/providers/theme.provider";
+import {createContext} from "react";
 
 export type ThemeProviderState = {
   theme: Theme;

@@ -1,16 +1,17 @@
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
-import { z } from "zod";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {Form, FormField, FormItem, FormLabel, FormControl, FormMessage} from "@/components/ui/form";
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {useEffect, useState} from "react";
+import {z} from "zod";
 import divisions from "@/assets/division.json";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { useGetProfileQuery } from "@/redux/features/auth/auth.api";
-import { useRequestParcelMutation } from "@/redux/features/parcel/parcel.api";
-import { toast } from "sonner";
-import { useNavigate } from "react-router";
+import {Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from "@/components/ui/select";
+import {useGetProfileQuery} from "@/redux/features/auth/auth.api";
+import {useRequestParcelMutation} from "@/redux/features/parcel/parcel.api";
+import {toast} from "sonner";
+import {useNavigate} from "react-router";
 
 const parcelSchema = z.object({
   senderId: z.string(),
@@ -18,7 +19,7 @@ const parcelSchema = z.object({
   receiverNumber: z.string().min(11, "Receiver number must be at least 11 digits"),
   title: z.string().min(2, "Parcel title is required"),
   type: z.string().min(2, "Parcel type is required"),
-  weight: z.number({ error: "Weight must be a number" }).min(1, "Weight must be at least 1 kg"),
+  weight: z.number({error: "Weight must be a number"}).min(1, "Weight must be at least 1 kg"),
   division: z.string().min(2, "Division is required"),
   city: z.string().min(2, "City is required"),
   area: z.string().min(2, "Area is required"),
@@ -27,7 +28,7 @@ type ParcelFormValues = z.infer<typeof parcelSchema>;
 
 const ParcelRequest = () => {
   const navigate = useNavigate();
-  const { data: profile } = useGetProfileQuery(undefined);
+  const {data: profile} = useGetProfileQuery(undefined);
   const [parcelRequest] = useRequestParcelMutation();
 
   const form = useForm<ParcelFormValues>({
@@ -46,9 +47,7 @@ const ParcelRequest = () => {
   });
 
   useEffect(() => {
-    if (profile?.data?._id) {
-      form.setValue("senderId", profile.data._id);
-    }
+    if (profile?.data?._id) form.setValue("senderId", profile.data._id);
   }, [profile]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,11 +55,9 @@ const ParcelRequest = () => {
   const onSubmit = async (values: ParcelFormValues) => {
     setIsSubmitting(true);
     try {
-      const payload = { ...values };
-      if (!payload.receiverEmail) {
-        delete payload.receiverEmail;
-      }
-      
+      const payload = {...values};
+      if (!payload.receiverEmail) delete payload.receiverEmail;
+
       const res = await parcelRequest(payload).unwrap();
 
       if (res.success) {
@@ -83,7 +80,7 @@ const ParcelRequest = () => {
           <FormField
             control={form.control}
             name="title"
-            render={({ field }) => (
+            render={({field}) => (
               <FormItem>
                 <FormLabel>Parcel Title</FormLabel>
                 <FormControl>
@@ -97,7 +94,7 @@ const ParcelRequest = () => {
           <FormField
             control={form.control}
             name="type"
-            render={({ field }) => (
+            render={({field}) => (
               <FormItem>
                 <FormLabel>Parcel Type</FormLabel>
                 <FormControl>
@@ -120,14 +117,12 @@ const ParcelRequest = () => {
           <FormField
             control={form.control}
             name="receiverEmail"
-            render={({ field }) => (
+            render={({field}) => (
               <FormItem>
-                <FormLabel>
-                  Receiver Email
-                </FormLabel>
+                <FormLabel>Receiver Email</FormLabel>
 
                 <FormControl>
-                  <Input placeholder="Receiver Email" {...field} required={true}/>
+                  <Input placeholder="Receiver Email" {...field} required={true} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -137,7 +132,7 @@ const ParcelRequest = () => {
           <FormField
             control={form.control}
             name="receiverNumber"
-            render={({ field }) => (
+            render={({field}) => (
               <FormItem className="w-full">
                 <FormLabel>Receiver Number</FormLabel>
                 <FormControl>
@@ -151,7 +146,7 @@ const ParcelRequest = () => {
           <FormField
             control={form.control}
             name="weight"
-            render={({ field }) => (
+            render={({field}) => (
               <FormItem>
                 <FormLabel>Weight (kg)</FormLabel>
                 <FormControl>
@@ -172,7 +167,7 @@ const ParcelRequest = () => {
           <FormField
             control={form.control}
             name="division"
-            render={({ field }) => (
+            render={({field}) => (
               <FormItem className="w-full">
                 <FormLabel>Division</FormLabel>
                 <FormControl>
@@ -197,7 +192,7 @@ const ParcelRequest = () => {
           <FormField
             control={form.control}
             name="city"
-            render={({ field }) => (
+            render={({field}) => (
               <FormItem>
                 <FormLabel>City</FormLabel>
                 <FormControl>
@@ -211,7 +206,7 @@ const ParcelRequest = () => {
           <FormField
             control={form.control}
             name="area"
-            render={({ field }) => (
+            render={({field}) => (
               <FormItem>
                 <FormLabel>Area</FormLabel>
                 <FormControl>

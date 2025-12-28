@@ -1,10 +1,10 @@
-import { useGetPaymentsStatusQuery } from "@/redux/features/payments/payment.api";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { DollarSign, ReceiptText, BarChart } from "lucide-react";
+import {useGetPaymentsStatusQuery} from "@/redux/features/payments/payment.api";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import {DollarSign, ReceiptText, BarChart} from "lucide-react";
 
 const PaymentStats = () => {
-  const { data, isLoading } = useGetPaymentsStatusQuery(undefined);
+  const {data, isLoading} = useGetPaymentsStatusQuery(undefined);
   const stats = data?.data;
 
   if (isLoading) return <p className="py-10 text-center">Loading.....</p>;
@@ -58,7 +58,7 @@ const PaymentStats = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {totalPaymentByStatus.map((stat: { _id: string; count: number }, index: number) => (
+            {totalPaymentByStatus.map((stat: {_id: string; count: number}, index: number) => (
               <TableRow key={index}>
                 <TableCell>{stat._id}</TableCell>
                 <TableCell>{stat.count}</TableCell>

@@ -1,31 +1,31 @@
-import { useGetUsersQuery } from "@/redux/features/users/users.api";
-import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender, type SortingState } from "@tanstack/react-table";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { type ColumnDef } from "@tanstack/react-table";
-import { useState } from "react";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import type { TUser } from "@/types/types";
+import {useGetUsersQuery} from "@/redux/features/users/users.api";
+import {useReactTable, getCoreRowModel, getSortedRowModel, flexRender, type SortingState} from "@tanstack/react-table";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import {type ColumnDef} from "@tanstack/react-table";
+import {useState} from "react";
+import {Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious} from "@/components/ui/pagination";
+import {Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from "@/components/ui/select";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
+import type {TUser} from "@/types/types";
 
 const userRoles: string[] = ["SENDER", "RECEIVER", "ADMIN", "SUPER_ADMIN"];
 
 const columns: ColumnDef<TUser>[] = [
-  { header: "Email", accessorKey: "email" },
-  { header: "Phone", accessorKey: "phone" },
-  { header: "Address", accessorKey: "address" },
-  { header: "Role", accessorKey: "role" },
-  { header: "Status", accessorKey: "isActive" },
+  {header: "Email", accessorKey: "email"},
+  {header: "Phone", accessorKey: "phone"},
+  {header: "Address", accessorKey: "address"},
+  {header: "Role", accessorKey: "role"},
+  {header: "Status", accessorKey: "isActive"},
   {
     header: "Verified",
     accessorKey: "isVerified",
-    cell: ({ row }) => (row.getValue("isVerified") ? "✅" : "❌"),
+    cell: ({row}) => (row.getValue("isVerified") ? "✅" : "❌"),
   },
   {
     header: "Created At",
     accessorKey: "createdAt",
-    cell: ({ row }) => {
+    cell: ({row}) => {
       const date = new Date(row.getValue("createdAt"));
       return date.toLocaleDateString("en-BD", {
         year: "numeric",
@@ -41,7 +41,7 @@ const Users = () => {
   const [role, setRole] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading } = useGetUsersQuery({ page: currentPage, email, role, phone });
+  const {data, isLoading} = useGetUsersQuery({page: currentPage, email, role, phone});
   const users = data?.data || [];
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -52,7 +52,7 @@ const Users = () => {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: setSorting,
-    state: { sorting },
+    state: {sorting},
   });
 
   const totalPage = data?.meta.totalPage;
@@ -155,7 +155,7 @@ const Users = () => {
                     className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
                   />
                 </PaginationItem>
-                {Array.from({ length: totalPage }, (_, index) => index + 1).map((page) => (
+                {Array.from({length: totalPage}, (_, index) => index + 1).map((page) => (
                   <PaginationItem key={page} onClick={() => setCurrentPage(page)}>
                     <PaginationLink isActive={currentPage === page}>{page}</PaginationLink>
                   </PaginationItem>

@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useGetParcelsQuery, useGetParcelsStatsQuery, useUpdateParcelStatusLogMutation } from "@/redux/features/parcel/parcel.api";
-import { useState, useMemo } from "react";
-import { type ColumnDef } from "@tanstack/react-table";
-import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender, type SortingState } from "@tanstack/react-table";
-import type { TParcel } from "@/types/types";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { deliveryStatusOptions, parcelStatus, Payment_Status } from "@/constants/ParcelStatus";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ReceiptText } from "lucide-react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { toast } from "sonner";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import {useGetParcelsQuery, useGetParcelsStatsQuery, useUpdateParcelStatusLogMutation} from "@/redux/features/parcel/parcel.api";
+import {useState, useMemo} from "react";
+import {type ColumnDef} from "@tanstack/react-table";
+import {useReactTable, getCoreRowModel, getSortedRowModel, flexRender, type SortingState} from "@tanstack/react-table";
+import type {TParcel} from "@/types/types";
+import {Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious} from "@/components/ui/pagination";
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
+import {Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from "@/components/ui/select";
+import {deliveryStatusOptions, parcelStatus, Payment_Status} from "@/constants/ParcelStatus";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {ReceiptText} from "lucide-react";
+import {z} from "zod";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {toast} from "sonner";
 
 const parcelUpdateSchema = z.object({
   trackingId: z.string(),
@@ -27,7 +27,7 @@ const parcelUpdateSchema = z.object({
 
 const ParcelStats = () => {
   // stats query
-  const { data: parcelStats, isLoading } = useGetParcelsStatsQuery(undefined);
+  const {data: parcelStats, isLoading} = useGetParcelsStatsQuery(undefined);
   const [updateParcelStatusLog] = useUpdateParcelStatusLogMutation(undefined);
   const stats = parcelStats?.data;
   const statusLogEachStatusCount = stats?.statusLogEachStatusCount; // [{}]
@@ -40,7 +40,7 @@ const ParcelStats = () => {
   const [status, setStatus] = useState<string | null>(null);
   const [payment, setPayment] = useState<string | null>(null);
 
-  const { data: rawParcels, isLoading: parcelLoading } = useGetParcelsQuery({
+  const {data: rawParcels, isLoading: parcelLoading} = useGetParcelsQuery({
     page: currentPage,
     trackingId: transactionId,
     status,
@@ -53,7 +53,7 @@ const ParcelStats = () => {
 
   const data = useMemo(() => {
     return (
-      rawParcels?.data.map((p : {trackingId: string, status: string, payment: string, statusLog: any}) => ({
+      rawParcels?.data.map((p: {trackingId: string; status: string; payment: string; statusLog: any}) => ({
         trackingId: p.trackingId,
         status: p.status,
         payment: p.payment,
@@ -63,10 +63,10 @@ const ParcelStats = () => {
   }, [rawParcels]);
 
   const columns: ColumnDef<TParcel>[] = [
-    { header: "Tracking ID", accessorKey: "trackingId" },
-    { header: "User Status", accessorKey: "status" },
-    { header: "Payment", accessorKey: "payment" },
-    { header: "Delivery Status", accessorKey: "statusLog" },
+    {header: "Tracking ID", accessorKey: "trackingId"},
+    {header: "User Status", accessorKey: "status"},
+    {header: "Payment", accessorKey: "payment"},
+    {header: "Delivery Status", accessorKey: "statusLog"},
   ];
 
   const table = useReactTable({
@@ -75,7 +75,7 @@ const ParcelStats = () => {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: setSorting,
-    state: { sorting },
+    state: {sorting},
   });
 
   const form = useForm({
@@ -87,16 +87,17 @@ const ParcelStats = () => {
     },
   });
 
-  const onSubmit = async (values: { trackingId: string; note: string; location: string; status: string }) => {
-    const { trackingId, ...rest } = values;
+  const onSubmit = async (values: {trackingId: string; note: string; location: string; status: string}) => {
+    const {trackingId, ...rest} = values;
 
-    const updatedDoc = { trackingId, payload: rest };
+    const updatedDoc = {trackingId, payload: rest};
     const toastId = toast.loading("Updating...");
     try {
       const res = await updateParcelStatusLog(updatedDoc).unwrap();
-      if (res.success) return toast.success(res.message, { id: toastId });
+
+      if (res.success) return toast.success(res.message, {id: toastId});
     } catch (error: any) {
-      toast.error(error.data.message, { id: toastId });
+      toast.error(error.data.message, {id: toastId});
     }
   };
 
@@ -126,7 +127,7 @@ const ParcelStats = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {statusLogEachStatusCount.map((i: { status: string; count: number }, index: number) => (
+                {statusLogEachStatusCount.map((i: {status: string; count: number}, index: number) => (
                   <TableRow key={index}>
                     <TableCell>{i.status}</TableCell>
                     <TableCell>{i.count}</TableCell>
@@ -143,7 +144,7 @@ const ParcelStats = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {totalParcelByStatus.map((i: { _id: string; count: number }, index: number) => (
+                {totalParcelByStatus.map((i: {_id: string; count: number}, index: number) => (
                   <TableRow key={index}>
                     <TableCell>{i._id}</TableCell>
                     <TableCell>{i.count}</TableCell>
@@ -241,7 +242,7 @@ const ParcelStats = () => {
             <FormField
               control={form.control}
               name="trackingId"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem className="w-full">
                   <FormLabel>Delivery Status</FormLabel>
                   <FormControl>
@@ -266,7 +267,7 @@ const ParcelStats = () => {
             <FormField
               control={form.control}
               name="status"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem className="w-full">
                   <FormLabel>Delivery Status</FormLabel>
                   <FormControl>
@@ -291,7 +292,7 @@ const ParcelStats = () => {
             <FormField
               control={form.control}
               name="note"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Note</FormLabel>
                   <FormControl>
@@ -305,7 +306,7 @@ const ParcelStats = () => {
             <FormField
               control={form.control}
               name="location"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Location</FormLabel>
                   <FormControl>
@@ -335,7 +336,7 @@ const ParcelStats = () => {
                     className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
                   />
                 </PaginationItem>
-                {Array.from({ length: totalPage }, (_, index) => index + 1).map((page) => (
+                {Array.from({length: totalPage}, (_, index) => index + 1).map((page) => (
                   <PaginationItem key={page} onClick={() => setCurrentPage(page)}>
                     <PaginationLink isActive={currentPage === page}>{page}</PaginationLink>
                   </PaginationItem>

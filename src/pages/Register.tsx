@@ -1,7 +1,7 @@
 import image1 from "@/assets/images/image-1.jpg";
-import { Link } from "react-router";
+import {Link} from "react-router";
 import Logo from "@/assets/icons/Logo";
-import { RegisterForm } from "@/components/modules/authentication/RegisterForm";
+import {RegisterForm} from "@/components/modules/authentication/RegisterForm";
 
 export default function Register() {
   return (

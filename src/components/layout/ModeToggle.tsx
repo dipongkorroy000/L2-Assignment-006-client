@@ -1,10 +1,10 @@
-import { Moon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useTheme } from "@/hooks/useTheme";
-import { useEffect, useState } from "react";
+import {Moon, Sun} from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {useTheme} from "@/hooks/useTheme";
+import {useEffect, useState} from "react";
 
 export function ModeToggle() {
-  const { theme, setTheme } = useTheme();
+  const {theme, setTheme} = useTheme();
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {

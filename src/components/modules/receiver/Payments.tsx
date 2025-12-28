@@ -1,16 +1,14 @@
-import { useUserPaymentsQuery } from "@/redux/features/payments/payment.api";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import type { Payment } from "@/types/types";
-
+import {useUserPaymentsQuery} from "@/redux/features/payments/payment.api";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import type {Payment} from "@/types/types";
 
 const Payments = () => {
-
-  const { data, isLoading } = useUserPaymentsQuery(undefined);
-    const payments = data?.data || [];
+  const {data, isLoading} = useUserPaymentsQuery(undefined);
+  const payments = data?.data || [];
 
   if (isLoading) return <p className="my-10 text-center">Loading....</p>;
 
-    return (
+  return (
     <section className="container mx-auto my-10">
       <h2 className="text-xl font-semibold mb-4">My Payments</h2>
       <Table>
@@ -37,16 +35,18 @@ const Payments = () => {
                 })}
               </TableCell>
               <TableCell>
-               {payment.status === "PAID" &&  <a href={payment.invoiceUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                  View Invoice
-                </a>}
+                {payment.status === "PAID" && (
+                  <a href={payment.invoiceUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                    View Invoice
+                  </a>
+                )}
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </section>
-    );
+  );
 };
 
 export default Payments;

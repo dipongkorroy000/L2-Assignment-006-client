@@ -1,11 +1,11 @@
-import { useGetPaymentsQuery } from "@/redux/features/payments/payment.api";
-import { useState } from "react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import type { TPayment } from "@/types/types";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import {useGetPaymentsQuery} from "@/redux/features/payments/payment.api";
+import {useState} from "react";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import type {TPayment} from "@/types/types";
+import {Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious} from "@/components/ui/pagination";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
 
 const statusArray: string[] = ["PAID", "UNPAID", "CANCEL", "FAILED", "REFUNDED"];
 
@@ -15,7 +15,7 @@ const Payments = () => {
   const [status, setStatus] = useState<string | null>(null);
   const [transactionId, setTransactionId] = useState<string | null>(null);
 
-  const { data, isLoading } = useGetPaymentsQuery({ transactionId, status, page: currentPage });
+  const {data, isLoading} = useGetPaymentsQuery({transactionId, status, page: currentPage});
   const payments = data?.data?.data || [];
 
   const totalPage = data?.data?.meta.totalPage;
@@ -121,7 +121,7 @@ const Payments = () => {
                     className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
                   />
                 </PaginationItem>
-                {Array.from({ length: totalPage }, (_, index) => index + 1).map((page) => (
+                {Array.from({length: totalPage}, (_, index) => index + 1).map((page) => (
                   <PaginationItem key={page} onClick={() => setCurrentPage(page)}>
                     <PaginationLink isActive={currentPage === page}>{page}</PaginationLink>
                   </PaginationItem>

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 
 interface About3Props {
   title?: string;
@@ -60,10 +60,10 @@ const defaultCompanies = [
 ];
 
 const defaultAchievements = [
-  { label: "Companies Supported", value: "300+" },
-  { label: "Projects Finalized", value: "800+" },
-  { label: "Happy Customers", value: "99%" },
-  { label: "Recognized Awards", value: "10+" },
+  {label: "Companies Supported", value: "300+"},
+  {label: "Projects Finalized", value: "800+"},
+  {label: "Happy Customers", value: "99%"},
+  {label: "Recognized Awards", value: "10+"},
 ];
 
 const AboutUs = ({

@@ -1,24 +1,21 @@
-import { useCancelParcelOTPSendMutation, useCancelParcelOTPVerifyMutation, useUserParcelsQuery } from "@/redux/features/parcel/parcel.api";
-import type { GetParcel } from "@/types/types";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { Ban } from "lucide-react";
-import { PackageCheck } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import {useCancelParcelOTPSendMutation, useCancelParcelOTPVerifyMutation, useUserParcelsQuery} from "@/redux/features/parcel/parcel.api";
+import type {GetParcel} from "@/types/types";
+import {Button} from "@/components/ui/button";
+import {useState} from "react";
+import {Ban} from "lucide-react";
+import {PackageCheck} from "lucide-react";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {InputOTP, InputOTPGroup, InputOTPSlot} from "@/components/ui/input-otp";
 import z from "zod";
-import { toast } from "sonner";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { useNextTimePaymentMutation } from "@/redux/features/payments/payment.api";
+import {toast} from "sonner";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter} from "@/components/ui/dialog";
+import {useNextTimePaymentMutation} from "@/redux/features/payments/payment.api";
 
 const FormSchema = z.object({
-  pin: z.string()
-    .min(6, {
-    message: "Your one-time password must be 6 characters.",
-  }),
+  pin: z.string().min(6, {message: "Your one-time password must be 6 characters."}),
 });
 
 const MyParcels = () => {
@@ -29,52 +26,45 @@ const MyParcels = () => {
 
   const [cancelParcelOTPSend] = useCancelParcelOTPSendMutation();
   const [cancelParcelOTPVerify] = useCancelParcelOTPVerifyMutation();
-  const { data, isLoading } = useUserParcelsQuery(undefined);
+  const {data, isLoading} = useUserParcelsQuery(undefined);
   const parcels = data?.data || [];
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {
-      pin: "",
-    },
+    defaultValues: {pin: ""},
   });
 
   const handleCancelParcel = async (id: string) => {
     await setTrackingId(id);
     const toastId = toast.loading("Loading...");
 
+    const res = await cancelParcelOTPSend({trackingId: id}).unwrap();
 
-    const res = await cancelParcelOTPSend({ trackingId: id }).unwrap();
-
-    if (res.success) {
-      toast.success("OTP send your email", { id: toastId });
-    }
+    if (res.success) toast.success("OTP send your email", {id: toastId});
 
     setOpenModal(true);
   };
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     const toastId = toast.loading("Verifying OTP");
-    const payload = { trackingId: trackingId, otp: data.pin };
+    const payload = {trackingId: trackingId, otp: data.pin};
 
     try {
       const res = await cancelParcelOTPVerify(payload).unwrap();
-      
-      if (res.success) {
-        toast.success("OTP Verified", { id: toastId });
-      }
-      setOpenModal(false)
 
+      if (res.success) toast.success("OTP Verified", {id: toastId});
+
+      setOpenModal(false);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handlePayment = async (trackingId : string) => {
+  const handlePayment = async (trackingId: string) => {
     const res = await nextTimePayment(trackingId);
 
     if (res.data.success) window.open(res.data.data.paymentUrl);
-  }
+  };
 
   if (isLoading) return <p className="my-10 text-center">Loading....</p>;
 
@@ -94,12 +84,12 @@ const MyParcels = () => {
               <p>
                 <strong>Receiver Phone:</strong> {parcel.receiverNumber}
               </p>
-              {
-                parcel?.receiverEmail && <p>
-                <strong>Receiver Email:</strong> {parcel?.receiverEmail}
-              </p>
-              }
-               
+              {parcel?.receiverEmail && (
+                <p>
+                  <strong>Receiver Email:</strong> {parcel?.receiverEmail}
+                </p>
+              )}
+
               <p>
                 <strong>Location:</strong> {parcel.division}, {parcel.city}, {parcel.area}
               </p>
@@ -136,19 +126,12 @@ const MyParcels = () => {
                       Cancel
                     </Button>
                   )}
-                  
                 </div>
-                  {parcel.payment !== "COMPLETE" && (
-                    <Button
-                      onClick={() => handlePayment(parcel.trackingId)}
-                      className="cursor-pointer mt-3"
-                      variant={"outline"}
-                      type="button"
-                    >
-                      Payment
-                    </Button>
-                  )}
-                
+                {parcel.payment !== "COMPLETE" && (
+                  <Button onClick={() => handlePayment(parcel.trackingId)} className="cursor-pointer mt-3" variant={"outline"} type="button">
+                    Payment
+                  </Button>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -162,7 +145,6 @@ const MyParcels = () => {
             <DialogContent className="max-w-md mx-auto">
               <DialogHeader>
                 <DialogTitle className="text-lg font-semibold">Enter OTP to Cancel Parcel</DialogTitle>
-
               </DialogHeader>
 
               <Form {...form}>
@@ -170,7 +152,7 @@ const MyParcels = () => {
                   <FormField
                     control={form.control}
                     name="pin"
-                    render={({ field }) => (
+                    render={({field}) => (
                       <FormItem>
                         <FormLabel>One-Time Password</FormLabel>
                         <FormControl>

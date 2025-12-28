@@ -1,6 +1,6 @@
-import { BookOpenIcon, InfoIcon, LifeBuoyIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import {BookOpenIcon, InfoIcon, LifeBuoyIcon} from "lucide-react";
+import {cn} from "@/lib/utils";
+import {Button} from "@/components/ui/button";
 import profileLogo from "@/assets/images/demo-profile-logo.jpg";
 import {
   NavigationMenu,
@@ -10,36 +10,36 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import Logo from "@/assets/icons/Logo";
-import { Link } from "react-router";
-import { ModeToggle } from "./ModeToggle";
-import { useGetProfileQuery } from "@/redux/features/auth/auth.api";
-import { role } from "@/constants/role";
+import {Link} from "react-router";
+import {ModeToggle} from "./ModeToggle";
+import {useGetProfileQuery} from "@/redux/features/auth/auth.api";
+import {role} from "@/constants/role";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "/", label: "Home", role: role.public },
-  { href: "/admin", label: "Dashboard", role: role.admin },
-  { href: "/super-admin", label: "Dashboard", role: role.superAdmin },
-  { href: "/sender", label: "Dashboard", role: role.sender },
-  { href: "/receiver", label: "Dashboard", role: role.receiver },
+  {href: "/", label: "Home", role: role.public},
+  {href: "/admin", label: "Dashboard", role: role.admin},
+  {href: "/super-admin", label: "Dashboard", role: role.superAdmin},
+  {href: "/sender", label: "Dashboard", role: role.sender},
+  {href: "/receiver", label: "Dashboard", role: role.receiver},
   // { href: "/", label: "Pricing", role: role.public },
   {
     label: "About",
     submenu: true,
     type: "icon",
     items: [
-      { href: "/get-us", label: "Getting Started", icon: "BookOpenIcon" },
-      { href: "/contact-us", label: "Contact Us", icon: "LifeBuoyIcon" },
-      { href: "/about-us", label: "About Us", icon: "InfoIcon" },
+      {href: "/get-us", label: "Getting Started", icon: "BookOpenIcon"},
+      {href: "/contact-us", label: "Contact Us", icon: "LifeBuoyIcon"},
+      {href: "/about-us", label: "About Us", icon: "InfoIcon"},
     ],
     role: role.public,
   },
 ];
 
 export default function Navbar() {
-  const { data: profile, isLoading } = useGetProfileQuery(undefined);
+  const {data: profile, isLoading} = useGetProfileQuery(undefined);
 
   return (
     <header className="border-b px-4 md:px-6 sticky top-0 z-50 bg-secondary">
@@ -151,9 +151,7 @@ export default function Navbar() {
                                             {item.icon === "LifeBuoyIcon" && (
                                               <LifeBuoyIcon size={16} className="text-foreground opacity-60" aria-hidden="true" />
                                             )}
-                                            {item.icon === "InfoIcon" && (
-                                              <InfoIcon size={16} className="text-foreground opacity-60" aria-hidden="true" />
-                                            )}
+                                            {item.icon === "InfoIcon" && <InfoIcon size={16} className="text-foreground opacity-60" aria-hidden="true" />}
                                             <span>{item.label}</span>
                                           </div>
                                         )}

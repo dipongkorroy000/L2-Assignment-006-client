@@ -1,6 +1,6 @@
-import type { ComponentType } from "react";
+import type {ComponentType} from "react";
 
-export type { TUser, TPayment, TParcel };
+export type {TUser, TPayment, TParcel};
 export type TRole = "SUPER_ADMIN" | "ADMIN" | "SENDER" | "RECEIVER";
 
 export interface ILogin {
@@ -70,7 +70,7 @@ export interface StatusLogEntry {
 
 export interface GetParcel {
   _id: string;
-  senderId: {name: string, phone: string, email: string, address: string};
+  senderId: {name: string; phone: string; email: string; address: string};
   receiverNumber: string;
   receiverEmail: string;
   title: string;
@@ -96,4 +96,4 @@ export interface Payment {
   invoiceUrl: string;
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
-};
+}

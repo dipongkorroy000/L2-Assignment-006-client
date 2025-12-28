@@ -1,50 +1,50 @@
 import Logo from "@/assets/icons/Logo";
 import React from "react";
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import {FaFacebook, FaInstagram, FaLinkedin, FaTwitter} from "react-icons/fa";
 
 interface Footer7Props {
-  logo?: { url: string; src: string; alt: string; title: string };
-  sections?: Array<{ title: string; links: Array<{ name: string; href: string }> }>;
+  logo?: {url: string; src: string; alt: string; title: string};
+  sections?: Array<{title: string; links: Array<{name: string; href: string}>}>;
   description?: string;
-  socialLinks?: Array<{ icon: React.ReactElement; href: string; label: string }>;
+  socialLinks?: Array<{icon: React.ReactElement; href: string; label: string}>;
   copyright?: string;
-  legalLinks?: Array<{ name: string; href: string }>;
+  legalLinks?: Array<{name: string; href: string}>;
 }
 
 const defaultSections = [
   {
     title: "Product",
     links: [
-      { name: "Overview", href: "#" },
-      { name: "Pricing", href: "#" },
+      {name: "Overview", href: "#"},
+      {name: "Pricing", href: "#"},
     ],
   },
   {
     title: "Company",
     links: [
-      { name: "About", href: "/about-us" },
-      { name: "Team", href: "#" },
+      {name: "About", href: "/about-us"},
+      {name: "Team", href: "#"},
     ],
   },
   {
     title: "Resources",
     links: [
-      { name: "Help", href: "#" },
-      { name: "Sales", href: "#" },
+      {name: "Help", href: "#"},
+      {name: "Sales", href: "#"},
     ],
   },
 ];
 
 const defaultSocialLinks = [
-  { icon: <FaInstagram className="size-5" />, href: "#", label: "Instagram" },
-  { icon: <FaFacebook className="size-5" />, href: "#", label: "Facebook" },
-  { icon: <FaTwitter className="size-5" />, href: "#", label: "Twitter" },
-  { icon: <FaLinkedin className="size-5" />, href: "#", label: "LinkedIn" },
+  {icon: <FaInstagram className="size-5" />, href: "#", label: "Instagram"},
+  {icon: <FaFacebook className="size-5" />, href: "#", label: "Facebook"},
+  {icon: <FaTwitter className="size-5" />, href: "#", label: "Twitter"},
+  {icon: <FaLinkedin className="size-5" />, href: "#", label: "LinkedIn"},
 ];
 
 const defaultLegalLinks = [
-  { name: "Terms and Conditions", href: "#" },
-  { name: "Privacy Policy", href: "#" },
+  {name: "Terms and Conditions", href: "#"},
+  {name: "Privacy Policy", href: "#"},
 ];
 
 const Footer = ({

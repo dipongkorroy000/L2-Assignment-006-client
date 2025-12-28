@@ -1,26 +1,30 @@
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {Button} from "@/components/ui/button";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {Input} from "@/components/ui/input";
 import PasswordShowHide from "@/components/ui/PasswordShowHide";
-import { cn } from "@/lib/utils";
-import { useLoginMutation } from "@/redux/features/auth/auth.api";
-import type { ILogin } from "@/types/types";
-import { type FieldValues, type SubmitHandler, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
-import { toast } from "sonner";
+import {cn} from "@/lib/utils";
+import {useLoginMutation} from "@/redux/features/auth/auth.api";
+import type {ILogin} from "@/types/types";
+import {type FieldValues, type SubmitHandler, useForm} from "react-hook-form";
+import {Link, useNavigate} from "react-router";
+import {toast} from "sonner";
 import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import {zodResolver} from "@hookform/resolvers/zod";
 
-const loginSchema = z.object({ email: z.email(), password: z.string() });
+const loginSchema = z.object({email: z.email(), password: z.string()});
 
-export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+export function LoginForm({className, ...props}: React.HTMLAttributes<HTMLDivElement>) {
   const navigate = useNavigate();
-  const form = useForm({ resolver: zodResolver(loginSchema), defaultValues: { email: "", password: "" } });
+  const form = useForm({resolver: zodResolver(loginSchema), defaultValues: {email: "", password: ""}});
   const [login] = useLoginMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await login(data as ILogin).unwrap();
+
+      console.log(res);
+
       if (res.success) {
         toast.success("Logged in successfully");
         navigate("/");
@@ -43,7 +47,7 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
             <FormField
               control={form.control}
               name="email"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
@@ -57,7 +61,7 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
             <FormField
               control={form.control}
               name="password"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>

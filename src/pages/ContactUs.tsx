@@ -1,4 +1,4 @@
-import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import {Mail, MapPin, MessageCircle, Phone} from "lucide-react";
 
 interface Contact7Props {
   title?: string;
@@ -19,7 +19,7 @@ interface Contact7Props {
 
 const ContactUs = ({
   title = "Contact Us",
-  description = "Contact the support team at Shadcnblocks.",
+  description = "Contact the support team at ShadcnBlocks.",
   emailLabel = "Email",
   emailDescription = "We respond to all emails within 24 hours.",
   email = "example@shadcnblocks.com",
@@ -37,12 +37,8 @@ const ContactUs = ({
     <section className="bg-background py-32">
       <div className="container mx-auto">
         <div className="mb-14">
-          <h1 className="mb-3 mt-2 text-balance text-3xl font-semibold md:text-4xl">
-            {title}
-          </h1>
-          <p className="text-muted-foreground max-w-xl text-lg">
-            {description}
-          </p>
+          <h1 className="mb-3 mt-2 text-balance text-3xl font-semibold md:text-4xl">{title}</h1>
+          <p className="text-muted-foreground max-w-xl text-lg">{description}</p>
         </div>
         <div className="grid gap-6 md:grid-cols-2">
           <div className="bg-muted rounded-lg p-6">
@@ -51,10 +47,7 @@ const ContactUs = ({
             </span>
             <p className="mb-2 text-lg font-semibold">{emailLabel}</p>
             <p className="text-muted-foreground mb-3">{emailDescription}</p>
-            <a
-              href={`mailto:${email}`}
-              className="font-semibold hover:underline"
-            >
+            <a href={`mailto:${email}`} className="font-semibold hover:underline">
               {email}
             </a>
           </div>
@@ -95,4 +88,3 @@ const ContactUs = ({
 };
 
 export default ContactUs;
-

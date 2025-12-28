@@ -1,21 +1,19 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { cn } from "@/lib/utils";
-import { useSendOTPMutation, useVerifyOTPMutation } from "@/redux/features/auth/auth.api";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Dot } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router";
-import { toast } from "sonner";
+import {Button} from "@/components/ui/button";
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
+import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {InputOTP, InputOTPGroup, InputOTPSlot} from "@/components/ui/input-otp";
+import {cn} from "@/lib/utils";
+import {useSendOTPMutation, useVerifyOTPMutation} from "@/redux/features/auth/auth.api";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Dot} from "lucide-react";
+import {useEffect, useState} from "react";
+import {useForm} from "react-hook-form";
+import {useLocation, useNavigate} from "react-router";
+import {toast} from "sonner";
 import z from "zod";
 
 const FormSchema = z.object({
-  pin: z.string().min(6, {
-    message: "Your one-time password must be 6 characters.",
-  }),
+  pin: z.string().min(6, {message: "Your one-time password must be 6 characters."}),
 });
 
 export default function Verification() {
@@ -29,18 +27,16 @@ export default function Verification() {
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {
-      pin: "",
-    },
+    defaultValues: {pin: ""},
   });
 
   const handleSendOtp = async () => {
     const toastId = toast.loading("Sending OTP");
 
     try {
-      const res = await sendOtp({ email: email }).unwrap();
+      const res = await sendOtp({email: email}).unwrap();
       if (res.success) {
-        toast.success("OTP Sent", { id: toastId });
+        toast.success("OTP Sent", {id: toastId});
         setConfirmed(true);
         setTimer(120);
       }
@@ -51,15 +47,12 @@ export default function Verification() {
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     const toastId = toast.loading("Verifying OTP");
-    const userInfo = {
-      email,
-      otp: data.pin,
-    };
+    const userInfo = {email, otp: data.pin};
 
     try {
       const res = await verifyOtp(userInfo).unwrap();
       if (res.success) {
-        toast.success("OTP Verified", { id: toastId });
+        toast.success("OTP Verified", {id: toastId});
         setConfirmed(true);
         navigate("/");
       }
@@ -70,15 +63,11 @@ export default function Verification() {
 
   //   ! Needed - Turned off for development
   useEffect(() => {
-    if (!email) {
-      navigate("/");
-    }
+    if (!email) navigate("/");
   }, [email]);
 
   useEffect(() => {
-    if (!email || !confirmed) {
-      return;
-    }
+    if (!email || !confirmed) return;
 
     const timerId = setInterval(() => {
       setTimer((prev) => (prev > 0 ? prev - 1 : 0));
@@ -104,7 +93,7 @@ export default function Verification() {
                 <FormField
                   control={form.control}
                   name="pin"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem>
                       <FormLabel>One-Time Password</FormLabel>
                       <FormControl>

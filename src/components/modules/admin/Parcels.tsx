@@ -1,16 +1,16 @@
-import { useGetParcelsQuery } from "@/redux/features/parcel/parcel.api";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import {useGetParcelsQuery} from "@/redux/features/parcel/parcel.api";
+import {Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious} from "@/components/ui/pagination";
+import {Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from "@/components/ui/select";
 import divisions from "@/assets/division.json";
 
-import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender, type SortingState } from "@tanstack/react-table";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useState, useMemo } from "react";
-import { type ColumnDef } from "@tanstack/react-table";
-import type { TParcel } from "@/types/types";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { parcelStatus, Payment_Status } from "@/constants/ParcelStatus";
+import {useReactTable, getCoreRowModel, getSortedRowModel, flexRender, type SortingState} from "@tanstack/react-table";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import {useState, useMemo} from "react";
+import {type ColumnDef} from "@tanstack/react-table";
+import type {TParcel} from "@/types/types";
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
+import {parcelStatus, Payment_Status} from "@/constants/ParcelStatus";
 
 type StatusLog = {
   status: string;
@@ -31,9 +31,8 @@ type Parcel = {
   statusLog: StatusLog[];
   receiverNumber: string;
   createdAt: Date;
-  senderId: {email: string}
+  senderId: {email: string};
 };
-
 
 const Parcels = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,27 +42,27 @@ const Parcels = () => {
   const [status, setStatus] = useState<string | null>(null);
   const [payment, setPayment] = useState<string | null>(null);
 
-  const { data: rawParcels, isLoading } = useGetParcelsQuery({ page: currentPage, division, trackingId: transactionId, status, payment });
+  const {data: rawParcels, isLoading} = useGetParcelsQuery({page: currentPage, division, trackingId: transactionId, status, payment});
   const totalPage = rawParcels?.meta.totalPage;
 
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const columns: ColumnDef<TParcel>[] = [
-    { header: "Tracking ID", accessorKey: "trackingId" },
-    { header: "Title", accessorKey: "title" },
-    { header: "Type", accessorKey: "type" },
-    { header: "Weight", accessorKey: "weight" },
-    { header: "Division", accessorKey: "division" },
-    { header: "City", accessorKey: "city" },
-    { header: "Area", accessorKey: "area" },
-    { header: "Receiver", accessorKey: "receiverNumber" },
-    { header: "Sender", accessorKey: "senderEmail" },
-    { header: "Status", accessorKey: "status" },
-    { header: "Payment", accessorKey: "payment" },
+    {header: "Tracking ID", accessorKey: "trackingId"},
+    {header: "Title", accessorKey: "title"},
+    {header: "Type", accessorKey: "type"},
+    {header: "Weight", accessorKey: "weight"},
+    {header: "Division", accessorKey: "division"},
+    {header: "City", accessorKey: "city"},
+    {header: "Area", accessorKey: "area"},
+    {header: "Receiver", accessorKey: "receiverNumber"},
+    {header: "Sender", accessorKey: "senderEmail"},
+    {header: "Status", accessorKey: "status"},
+    {header: "Payment", accessorKey: "payment"},
     {
       header: "Created At",
       accessorKey: "createdAt",
-      cell: ({ row }) => {
+      cell: ({row}) => {
         const date = new Date(row.getValue("createdAt"));
         return date.toLocaleDateString("en-BD", {
           year: "numeric",
@@ -99,7 +98,7 @@ const Parcels = () => {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: setSorting,
-    state: { sorting },
+    state: {sorting},
   });
 
   if (isLoading) return <p className="my-10 text-center">Loading....</p>;
@@ -209,7 +208,7 @@ const Parcels = () => {
                     className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
                   />
                 </PaginationItem>
-                {Array.from({ length: totalPage }, (_, index) => index + 1).map((page) => (
+                {Array.from({length: totalPage}, (_, index) => index + 1).map((page) => (
                   <PaginationItem key={page} onClick={() => setCurrentPage(page)}>
                     <PaginationLink isActive={currentPage === page}>{page}</PaginationLink>
                   </PaginationItem>

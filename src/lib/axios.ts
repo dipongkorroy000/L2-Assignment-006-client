@@ -1,7 +1,7 @@
 import config from "@/config/envVars";
-import axios, { type AxiosRequestConfig } from "axios";
+import axios, {type AxiosRequestConfig} from "axios";
 
-export const axiosInstance = axios.create({ baseURL: config.baseUrl, withCredentials: true });
+export const axiosInstance = axios.create({baseURL: config.baseUrl, withCredentials: true});
 
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
@@ -23,11 +23,8 @@ let pendingQueue: {
 
 const processQueue = (error: unknown) => {
   pendingQueue.forEach((promise) => {
-    if (error) {
-      promise.reject(error);
-    } else {
-      promise.resolve(null);
-    }
+    if (error) promise.reject(error);
+    else promise.resolve(null);
   });
 
   pendingQueue = [];
@@ -38,24 +35,15 @@ axiosInstance.interceptors.response.use(
   (response) => {
     return response;
   },
+
   async (error) => {
+    const originalRequest = error.config as AxiosRequestConfig & {_retry: boolean};
 
-    const originalRequest = error.config as AxiosRequestConfig & {
-      _retry: boolean;
-    };
-
-    if (
-      error.response.status === 400 &&
-      error.response.data.message === "jwt expired" &&
-      !originalRequest._retry
-    ) {
-
+    if (error.response.status === 400 && error.response.data.message === "jwt expired" && !originalRequest._retry) {
       originalRequest._retry = true;
 
       if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          pendingQueue.push({ resolve, reject });
-        })
+        return new Promise((resolve, reject) => pendingQueue.push({resolve, reject}))
           .then(() => axiosInstance(originalRequest))
           .catch((error) => Promise.reject(error));
       }
@@ -69,6 +57,7 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       } catch (error) {
         processQueue(error);
+
         return Promise.reject(error);
       } finally {
         isRefreshing = false;

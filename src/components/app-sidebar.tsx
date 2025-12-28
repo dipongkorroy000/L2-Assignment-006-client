@@ -12,13 +12,13 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { Link } from "react-router";
+import {Link} from "react-router";
 import Logo from "@/assets/icons/Logo";
-import { useGetProfileQuery } from "@/redux/features/auth/auth.api";
-import { getSidebarItems } from "@/utils/getSidebarItems";
+import {useGetProfileQuery} from "@/redux/features/auth/auth.api";
+import {getSidebarItems} from "@/utils/getSidebarItems";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data: profile } = useGetProfileQuery(undefined);
+export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
+  const {data: profile} = useGetProfileQuery(undefined);
 
   const data = {
     navMain: getSidebarItems(profile?.data.role),

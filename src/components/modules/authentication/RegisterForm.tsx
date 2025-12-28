@@ -1,47 +1,47 @@
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
-import { toast } from "sonner";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {Button} from "@/components/ui/button";
+import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {Input} from "@/components/ui/input";
+import {cn} from "@/lib/utils";
+import {useForm} from "react-hook-form";
+import {Link, useNavigate} from "react-router";
+import {toast} from "sonner";
+import {z} from "zod";
+import {zodResolver} from "@hookform/resolvers/zod";
 import PasswordShowHide from "@/components/ui/PasswordShowHide";
-import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import {useRegisterMutation} from "@/redux/features/auth/auth.api";
 
 const registerSchema = z
   .object({
-    name: z.string().min(3, { error: "Name is too short" }).max(50),
+    name: z.string().min(3, {error: "Name is too short"}).max(50),
     email: z.email(),
-    password: z.string().min(8, { error: "Password minimum 8 character" }),
+    password: z.string().min(8, {error: "Password minimum 8 character"}),
     confirmPassword: z.string().min(8),
   })
-  .refine((data) => data.password === data.confirmPassword, { message: "Passwords don't match", path: ["confirmPassword"] });
+  .refine((data) => data.password === data.confirmPassword, {message: "Passwords don't match", path: ["confirmPassword"]});
 
-export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+export function RegisterForm({className, ...props}: React.HTMLAttributes<HTMLDivElement>) {
   const [register] = useRegisterMutation();
   const navigate = useNavigate();
 
   const form = useForm({
     resolver: zodResolver(registerSchema),
-    defaultValues: { name: "", email: "", password: "", confirmPassword: "" },
+    defaultValues: {name: "", email: "", password: "", confirmPassword: ""},
   });
 
   const onSubmit = async (data: z.infer<typeof registerSchema>) => {
-    const payload = { name: data.name, email: data.email, password: data.password };
+    const payload = {name: data.name, email: data.email, password: data.password};
     const toastLoading = toast.loading("loading...");
 
-    
     try {
       const res = await register(payload).unwrap();
       if (res.email) {
-        toast.success("Register successfully", { id: toastLoading });
+        toast.success("Register successfully", {id: toastLoading});
         navigate("/verification", {state: res.email});
       }
     } catch (error: any) {
-      toast.error(error.data.message || error.data, { id: toastLoading });
-      console.log(error)
+      toast.error(error.data.message || error.data, {id: toastLoading});
+      console.log(error);
     }
   };
 
@@ -56,7 +56,7 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
             <FormField
               control={form.control}
               name="name"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
@@ -71,7 +71,7 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
             <FormField
               control={form.control}
               name="email"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
@@ -86,7 +86,7 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
             <FormField
               control={form.control}
               name="password"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
@@ -100,7 +100,7 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
             <FormField
               control={form.control}
               name="confirmPassword"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>

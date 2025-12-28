@@ -1,17 +1,17 @@
-import { authApi, useGetProfileQuery, useLogoutMutation, useUpdateProfileMutation } from "@/redux/features/auth/auth.api";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ShieldCheck, ShieldAlert } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import { useAppDispatch } from "@/redux/store";
-import { toast } from "sonner";
+import {authApi, useGetProfileQuery, useLogoutMutation, useUpdateProfileMutation} from "@/redux/features/auth/auth.api";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {Form, FormField, FormItem, FormLabel, FormControl, FormMessage} from "@/components/ui/form";
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
+import {Badge} from "@/components/ui/badge";
+import {ShieldCheck, ShieldAlert} from "lucide-react";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {z} from "zod";
+import {useState} from "react";
+import {useNavigate} from "react-router";
+import {useAppDispatch} from "@/redux/store";
+import {toast} from "sonner";
 
 const profileSchema = z.object({
   phone: z.string().min(11, "Contact number must be at least 11 digits"),
@@ -23,9 +23,9 @@ type ProfileFormValues = z.infer<typeof profileSchema>;
 const Profile = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { data: profile, isLoading } = useGetProfileQuery(undefined);
+  const {data: profile, isLoading} = useGetProfileQuery(undefined);
   const [logout] = useLogoutMutation();
-  const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
+  const [updateProfile, {isLoading: isUpdating}] = useUpdateProfileMutation();
   const [editMode, setEditMode] = useState(false);
 
   const form = useForm<ProfileFormValues>({
@@ -36,14 +36,17 @@ const Profile = () => {
     },
   });
 
-  const { name, email, role, isVerified } = profile?.data || {};
+  const {name, email, role, isVerified} = profile?.data || {};
 
   const onSubmit = async (values: ProfileFormValues) => {
-    const toastId = toast.loading("loading...")
+    const toastId = toast.loading("loading...");
     try {
-      const res = await updateProfile({ email, phone: values.phone, address: values.address }).unwrap();
+      const res = await updateProfile({email, phone: values.phone, address: values.address}).unwrap();
 
-      if (res.success) {toast.success("Updated successfully", { id: toastId }); setEditMode(false)}
+      if (res.success) {
+        toast.success("Updated successfully", {id: toastId});
+        setEditMode(false);
+      }
     } catch (err) {
       console.error("Update failed:", err);
     }
@@ -84,7 +87,7 @@ const Profile = () => {
             ) : (
               <>
                 <ShieldAlert className="text-yellow-600" />
-                <Button variant="destructive" size="sm" onClick={() => navigate("/verification", { state: email })}>
+                <Button variant="destructive" size="sm" onClick={() => navigate("/verification", {state: email})}>
                   Verify Now
                 </Button>
               </>
@@ -97,7 +100,7 @@ const Profile = () => {
                 <FormField
                   control={form.control}
                   name="phone"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem>
                       <FormLabel>Contact Number</FormLabel>
                       <FormControl>
@@ -111,7 +114,7 @@ const Profile = () => {
                 <FormField
                   control={form.control}
                   name="address"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem>
                       <FormLabel>Address</FormLabel>
                       <FormControl>
