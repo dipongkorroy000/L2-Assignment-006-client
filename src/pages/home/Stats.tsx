@@ -23,26 +23,26 @@ const Stats: React.FC = () => {
       <h2 className="2xl:text-5xl xl:text-4xl lg:text-3xl md:text-2xl text-xl font-bold text-center">Platform Performance Insights</h2>
 
       <div className="flex justify-center max-md:mx-5">
-        <div className="grid grid-cols-4 2xl:gap-26 xl:gap-20 lg:gap-16 md:gap-10 gap-5">
-          <div>
+        <div className="grid grid-cols-4 2xl:gap-26 xl:gap-20 lg:gap-16 md:gap-10">
+          <div className="flex flex-col justify-center items-center">
             <div className="mb-2 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl font-semibold">
               {visible && <Counter target={90} suffix="%" />}
             </div>
             <h3 className="leading-6 text-muted-foreground lg:text-lg text-sm">Reviews</h3>
           </div>
-          <div>
+          <div className="flex flex-col justify-center items-center">
             <div className="mb-2 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl font-semibold">
               {visible && <Counter target={200} suffix="+" />}
             </div>
             <h3 className="leading-6 text-muted-foreground lg:text-lg text-sm">Companies</h3>
           </div>
-          <div>
+          <div className="flex flex-col justify-center items-center">
             <div className="mb-2 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl font-semibold">
               {visible && <Counter target={99} suffix="%" />}
             </div>
             <h3 className="leading-6 text-muted-foreground lg:text-lg text-sm">Comfortable</h3>
           </div>
-          <div>
+          <div className="flex flex-col justify-center items-center">
             <div className="mb-2 2xl:text-5xl xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl font-semibold">
               {visible && <Counter target={150} suffix="+" />}
             </div>
