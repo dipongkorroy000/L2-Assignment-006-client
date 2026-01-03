@@ -4,8 +4,8 @@ export default function HowItWorksPage() {
   return (
     <section className="container mx-auto 2xl:py-20 xl:py-16 lg:py-12 py-10 2xl:space-y-10 space-y-8">
       <div className="2xl:space-y-5 xl:space-y-3 lg:space-y-2 space-y-1 text-center">
-        <h1 className="2xl:text-5xl xl:text-4xl lg:text-3xl md:text-2xl text-xl font-extrabold">How Our Parcel Delivery Works</h1>
-        <p className="text-muted-foreground text-balance 2xl:text-xl xl:text-lg lg:text-sm text-sm">
+        <h1 className="2xl:text-4xl xl:text-3xl lg:text-2xl md:text-xl text-lg font-extrabold">How Our Parcel Delivery Works</h1>
+        <p className="text-muted-foreground text-balance 2xl:text-lg text-sm">
           We make sending and receiving parcels simple, secure, and fast. Here’s the step‑by‑step process.
         </p>
       </div>

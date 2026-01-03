@@ -56,10 +56,10 @@ const AboutUs = ({
   }, []);
 
   return (
-    <section className="py-10">
-      <div className="w-full mx-auto container space-y-8 py-16 max-md:px-6 max-md:py-5 rounded-2xl mb-10 max-md:mb-5">
-        <div className="mb-14 grid gap-5 text-center md:grid-cols-2 md:text-left">
-          <h1 className="2xl:text-5xl xl:text-4xl lg:text-3xl md:text-2xl text-xl font-bold">{title}</h1>
+    <section>
+      <div className="w-full mx-auto container space-y-8 py-16 max-md:px-6 max-md:py-5 rounded-2xl max-md:mb-5">
+        <div className="mb-10 max-md:mb-5 grid gap-5 max-md:gap-2 md:grid-cols-2 md:text-left">
+          <h1 className="2xl:text-4xl xl:text-3xl lg:text-2xl md:text-xl text-lg font-bold">{title}</h1>
           <p className="text-muted-foreground">{description}</p>
         </div>
 
@@ -83,13 +83,13 @@ const AboutUs = ({
         </div>
 
         {/* Achievements with Counter */}
-        <div ref={ref} className="relative overflow-hidden rounded-xl bg-muted 2xl:my-10 xl:my-8 my-5 xl:py-20 lg:py-16 md:py-10 py-8 max-md:py-10 px-10">
-          <div className="flex flex-col gap-4 text-center md:text-left">
-            <h2 className="2xl:text-5xl xl:text-4xl lg:text-3xl md:text-2xl text-xl font-bold">{achievementsTitle}</h2>
-            <p className="max-w-xl text-muted-foreground">{achievementsDescription}</p>
+        <div ref={ref} className="relative overflow-hidden rounded-xl bg-muted 2xl:my-10 xl:my-8 my-5 xl:py-20 lg:py-16 md:py-10 py-8 max-md:py-10 px-10 max-md:px-5">
+          <div className="flex flex-col gap-4 max-md:gap-2 md:text-left">
+            <h2 className="2xl:text-4xl xl:text-3xl lg:text-2xl md:text-xl text-lg font-bold">{achievementsTitle}</h2>
+            <p className="max-w-xl text-muted-foreground max-md:text-sm">{achievementsDescription}</p>
           </div>
 
-          <div className="mt-10 flex max-md:flex-col justify-between text-center">
+          <div className="mt-10 max-md:mt-5 flex max-md:flex-col justify-between text-center">
             {achievements.map((item, idx) => {
               // Extract numeric part + suffix
               const match = item.value.match(/^(\d+)([%+])?$/);

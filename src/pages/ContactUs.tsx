@@ -37,8 +37,8 @@ const ContactUs = ({
     <section className="bg-background py-10 max-md:py-5 max-md:px-5">
       <div className="container mx-auto lg:space-y-6 md:space-y-4 space-y-3">
         <div className="lg:space-y-6 md:space-y-4 space-y-3">
-          <h1 className="2xl:text-5xl xl:text-4xl lg:text-3xl md:text-2xl text-xl font-bold">{title}</h1>
-          <p className="text-muted-foreground text-balance 2xl:text-xl xl:text-lg lg:text-sm text-sm">{description}</p>
+          <h1 className="2xl:text-4xl xl:text-3xl lg:text-3xl md:text-2xl text-xl font-bold">{title}</h1>
+          <p className="text-muted-foreground text-balance 2xl:text-lg xl:text-base lg:text-sm text-sm">{description}</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 max-md:gap-3">
