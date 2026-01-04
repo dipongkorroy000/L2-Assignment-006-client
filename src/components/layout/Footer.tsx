@@ -1,6 +1,6 @@
 import Logo from "@/assets/icons/Logo";
 import React from "react";
-import {FaFacebook, FaInstagram, FaLinkedin, FaTwitter} from "react-icons/fa";
+import {FaInstagram, FaLinkedin, FaTwitter} from "react-icons/fa";
 
 interface Footer7Props {
   logo?: {url: string; src: string; alt: string; title: string};
@@ -29,10 +29,9 @@ const defaultSections = [
 ];
 
 const defaultSocialLinks = [
-  {icon: <FaInstagram className="size-5" />, href: "#", label: "Instagram"},
-  {icon: <FaFacebook className="size-5" />, href: "#", label: "Facebook"},
-  {icon: <FaTwitter className="size-5" />, href: "#", label: "Twitter"},
-  {icon: <FaLinkedin className="size-5" />, href: "#", label: "LinkedIn"},
+  {icon: <FaInstagram className="size-5" />, href: "https://www.instagram.com/dipongkorroy000", label: "Instagram"},
+  {icon: <FaTwitter className="size-5" />, href: "https://x.com/dipongkorroy000", label: "Twitter"},
+  {icon: <FaLinkedin className="size-5" />, href: "https://www.linkedin.com/in/dipongkor", label: "LinkedIn"},
 ];
 
 const defaultLegalLinks = [
@@ -60,7 +59,7 @@ const Footer = ({
             <ul className="text-muted-foreground flex items-center space-x-6">
               {socialLinks.map((social, idx) => (
                 <li key={idx} className="hover:text-primary font-medium">
-                  <a href={social.href} aria-label={social.label}>
+                  <a target="_blank" href={social.href} aria-label={social.label}>
                     {social.icon}
                   </a>
                 </li>
@@ -75,7 +74,9 @@ const Footer = ({
                 <ul className="text-muted-foreground space-y-3 text-sm max-md:space-y-1">
                   {section.links.map((link, linkIdx) => (
                     <li key={linkIdx} className="hover:text-primary font-medium">
-                      <a href={link.href}>{link.name}</a>
+                      <a target="_blank" href={link.href}>
+                        {link.name}
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -89,7 +90,9 @@ const Footer = ({
           <ul className="order-1 flex flex-col gap-2 md:order-2 md:flex-row">
             {legalLinks.map((link, idx) => (
               <li key={idx} className="hover:text-primary">
-                <a href={link.href}> {link.name}</a>
+                <a target="_blank" href={link.href}>
+                  {link.name}
+                </a>
               </li>
             ))}
           </ul>
