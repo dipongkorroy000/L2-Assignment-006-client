@@ -16,7 +16,7 @@ const defaultSections = [
   {
     title: "Product",
     links: [
-      {name: "Overview", href: "#"},
+      {name: "Overview", href: "/"},
       {name: "Frequently asked questions", href: "/faq"},
     ],
   },
@@ -24,7 +24,7 @@ const defaultSections = [
     title: "Company",
     links: [
       {name: "About", href: "/about-us"},
-      {name: "Team", href: "#"},
+      {name: "Team", href: "/"},
     ],
   },
 ];
@@ -36,7 +36,7 @@ const defaultSocialLinks = [
 ];
 
 const defaultLegalLinks = [
-  {name: "Terms and Conditions", href: "#"},
+  {name: "Terms and Conditions", href: "/"},
   {name: "Privacy Policy", href: "/privacy"},
 ];
 
@@ -89,9 +89,9 @@ const Footer = ({
           <ul className="order-1 flex flex-col gap-2 md:order-2 md:flex-row">
             {legalLinks.map((link, idx) => (
               <li key={idx} className="hover:text-primary">
-                <a target="_blank" href={link.href}>
+                <Link to={link.href}>
                   {link.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
