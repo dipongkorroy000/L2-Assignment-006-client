@@ -11,6 +11,7 @@ import {Link, useNavigate} from "react-router";
 import {toast} from "sonner";
 import z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
+import config from "@/config/envVars";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -99,7 +100,7 @@ export function LoginForm({className, ...props}: React.HTMLAttributes<HTMLDivEle
                 type="button"
                 variant="outline"
                 className="w-full"
-                onClick={() => handleDemoLogin({email: "dip@gmail.com", password: "abAB12**"}, "Demo Admin")}
+                onClick={() => handleDemoLogin({email: config.superAdmin, password: config.adminPass}, "Demo Admin")}
               >
                 Login as Demo Admin
               </Button>
@@ -108,7 +109,7 @@ export function LoginForm({className, ...props}: React.HTMLAttributes<HTMLDivEle
                 type="button"
                 variant="outline"
                 className="w-full"
-                onClick={() => handleDemoLogin({email: "dipongkorroy00000@gmail.com", password: "abAB12**"}, "Demo Sender")}
+                onClick={() => handleDemoLogin({email: "dipongkorroy00000@gmail.com", password: config.adminPass}, "Demo Sender")}
               >
                 Login as Demo Sender
               </Button>
@@ -117,7 +118,7 @@ export function LoginForm({className, ...props}: React.HTMLAttributes<HTMLDivEle
                 type="button"
                 variant="outline"
                 className="w-full"
-                onClick={() => handleDemoLogin({email: "diproy0990@gmail.com", password: "abAB12**"}, "Demo Receiver")}
+                onClick={() => handleDemoLogin({email: "diproy0990@gmail.com", password: config.adminPass}, "Demo Receiver")}
               >
                 Login as Demo Receiver
               </Button>
