@@ -13,6 +13,7 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter} from "@/components/ui/dialog";
 import {useNextTimePaymentMutation} from "@/redux/features/payments/payment.api";
+import LoadingBtn from "@/components/LoadingBtn";
 
 const FormSchema = z.object({
   pin: z.string().min(6, {message: "Your one-time password must be 6 characters."}),
@@ -66,7 +67,7 @@ const MyParcels = () => {
     if (res.data.success) window.open(res.data.data.paymentUrl);
   };
 
-  if (isLoading) return <p className="my-10 text-center">Loading....</p>;
+  if (isLoading) return <LoadingBtn></LoadingBtn>;
 
   return (
     <div>

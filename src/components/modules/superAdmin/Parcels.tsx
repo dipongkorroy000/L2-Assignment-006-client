@@ -11,6 +11,7 @@ import type {TParcel} from "@/types/types";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {parcelStatus, Payment_Status} from "@/constants/ParcelStatus";
+import LoadingBtn from "@/components/LoadingBtn";
 
 type StatusLog = {
   status: string;
@@ -101,7 +102,7 @@ const Parcels = () => {
     state: {sorting},
   });
 
-  if (isLoading) return <p className="my-10 text-center">Loading....</p>;
+  if (isLoading) return <LoadingBtn></LoadingBtn>;
 
   return (
     <div className="container mx-auto my-10">

@@ -13,6 +13,7 @@ import {useState} from "react";
 import {useNavigate} from "react-router";
 import {useAppDispatch} from "@/redux/store";
 import {toast} from "sonner";
+import {Spinner} from "@/components/ui/spinner";
 
 const profileSchema = z.object({
   fullName: z.string().min(2),
@@ -65,7 +66,7 @@ const Profile = () => {
     navigate("/");
   };
 
-  if (isLoading) return <p className="my-10 text-center">Loading...</p>;
+  if (isLoading) return <Spinner />;
 
   return (
     <section className="container mx-auto max-w-2xl px-4 min-h-screen md:py-20 py-10">

@@ -6,6 +6,7 @@ import {Pagination, PaginationContent, PaginationItem, PaginationLink, Paginatio
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
+import LoadingBtn from "@/components/LoadingBtn";
 
 const statusArray: string[] = ["PAID", "UNPAID", "CANCEL", "FAILED", "REFUNDED"];
 
@@ -20,7 +21,7 @@ const Payments = () => {
 
   const totalPage = data?.data?.meta.totalPage;
 
-  if (isLoading) return <p className="my-10 text-center">Loading....</p>;
+  if (isLoading) return <LoadingBtn></LoadingBtn>;
 
   return (
     <div className="container mx-auto my-10">

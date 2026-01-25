@@ -2,12 +2,13 @@ import {useGetPaymentsStatusQuery} from "@/redux/features/payments/payment.api";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {DollarSign, ReceiptText, BarChart} from "lucide-react";
+import LoadingBtn from "@/components/LoadingBtn";
 
 const PaymentStats = () => {
   const {data, isLoading} = useGetPaymentsStatusQuery(undefined);
   const stats = data?.data;
 
-  if (isLoading) return <p className="py-10 text-center">Loading.....</p>;
+  if (isLoading) return <LoadingBtn></LoadingBtn>;
   if (!stats) return <p className="py-10 text-center">No stats available</p>;
 
   const totalPayment = stats.totalPayment;

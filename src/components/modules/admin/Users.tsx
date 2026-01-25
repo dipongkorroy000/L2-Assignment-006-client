@@ -8,6 +8,7 @@ import {Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from "@/c
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import type {TUser} from "@/types/types";
+import LoadingBtn from "@/components/LoadingBtn";
 
 const userRoles: string[] = ["SENDER", "RECEIVER", "ADMIN", "SUPER_ADMIN"];
 
@@ -57,7 +58,7 @@ const Users = () => {
 
   const totalPage = data?.meta.totalPage;
 
-  if (isLoading) return <p className="my-10 text-center">Loading....</p>;
+  if (isLoading) return <LoadingBtn></LoadingBtn>;
 
   return (
     <div className="container mx-auto my-10">

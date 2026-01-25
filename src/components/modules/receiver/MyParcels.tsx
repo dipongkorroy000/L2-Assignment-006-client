@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import LoadingBtn from "@/components/LoadingBtn";
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {useGetProfileQuery} from "@/redux/features/auth/auth.api";
@@ -36,7 +37,7 @@ const MyParcels = () => {
     if (res.data.success) window.open(res.data?.data.paymentUrl);
   };
 
-  if (isLoading || profileLoad) return <p className="my-10 text-center">Loading....</p>;
+  if (isLoading || profileLoad) return <LoadingBtn></LoadingBtn>;
 
   return (
     <div>

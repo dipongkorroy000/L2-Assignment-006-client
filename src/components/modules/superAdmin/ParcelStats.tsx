@@ -16,6 +16,7 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {toast} from "sonner";
+import LoadingBtn from "@/components/LoadingBtn";
 
 const parcelUpdateSchema = z.object({
   trackingId: z.string(),
@@ -100,7 +101,7 @@ const ParcelStats = () => {
     }
   };
 
-  if (isLoading || parcelLoading) return <p className="my-10 text-center">Loading....</p>;
+  if (isLoading || parcelLoading) return <LoadingBtn></LoadingBtn>;
 
   return (
     <div>

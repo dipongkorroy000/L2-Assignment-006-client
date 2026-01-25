@@ -9,6 +9,7 @@ import {Button} from "@/components/ui/button";
 import {Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from "@/components/ui/select";
 import {TARoles} from "@/constants/role";
 import {toast} from "sonner";
+import LoadingBtn from "@/components/LoadingBtn";
 
 const UserStats = () => {
   const {data, isLoading} = useGetUserStatsQuery(undefined);
@@ -52,7 +53,7 @@ const UserStats = () => {
     }
   };
 
-  if (isLoading) return <h2 className="my-10 text-center">Loading....</h2>;
+  if (isLoading) return <LoadingBtn></LoadingBtn>;
   if (!stats) return <h2 className="my-10 text-center">No stats available</h2>;
 
   return (
