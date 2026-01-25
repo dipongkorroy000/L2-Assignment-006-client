@@ -18,6 +18,7 @@ export const parcelApi = baseApi.injectEndpoints({
       invalidatesTags: ["PARCEL"],
     }),
     userParcels: builder.query({query: () => ({url: `/parcel/myParcels`, method: "GET"}), providesTags: ["PARCEL"]}),
+    getSenderStats: builder.query({query: () => ({url: `/stats/sender`, method: "GET"}), providesTags: ["PARCEL"]}),
 
     cancelParcelOTPSend: builder.mutation({
       query: (payload) => ({url: "/otp/parcel-otp-send", method: "POST", data: payload}),
@@ -46,4 +47,5 @@ export const {
   useAnyOneFindParcelQuery,
   useIncomingParcelsQuery,
   useConfirmParcelMutation,
+  useGetSenderStatsQuery,
 } = parcelApi;
