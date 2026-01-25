@@ -7,6 +7,8 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {useEffect, useState} from "react";
 import {z} from "zod";
 import divisions from "@/assets/division.json";
+import districts from "@/assets/districts.json";
+import upazilas from "@/assets/upazilas.json";
 import {Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from "@/components/ui/select";
 import {useGetProfileQuery} from "@/redux/features/auth/auth.api";
 import {useRequestParcelMutation} from "@/redux/features/parcel/parcel.api";
@@ -22,6 +24,7 @@ const parcelSchema = z.object({
   weight: z.number({error: "Weight must be a number"}).min(1, "Weight must be at least 1 kg"),
   division: z.string().min(2, "Division is required"),
   city: z.string().min(2, "City is required"),
+  upazila: z.string(),
   area: z.string().min(2, "Area is required"),
 });
 type ParcelFormValues = z.infer<typeof parcelSchema>;
@@ -42,6 +45,7 @@ const ParcelRequest = () => {
       weight: 1,
       division: "",
       city: "",
+      upazila: "",
       area: "",
     },
   });
@@ -73,6 +77,9 @@ const ParcelRequest = () => {
     }
   };
 
+  const [selectedDivision, setSelectedDivision] = useState<string>("");
+  const [selectedDistrict, setSelectedDistrict] = useState<string>("");
+
   return (
     <section className="container max-w-xl mx-auto my-10">
       <Form {...form}>
@@ -100,7 +107,7 @@ const ParcelRequest = () => {
                 <FormControl>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <SelectTrigger className="w-full">
-                      <SelectValue />
+                      <SelectValue placeholder="Select Parcel Type" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="document">Document</SelectItem>
@@ -119,10 +126,10 @@ const ParcelRequest = () => {
             name="receiverEmail"
             render={({field}) => (
               <FormItem>
-                <FormLabel>Receiver Email</FormLabel>
+                <FormLabel>Receiver Email (optional | If the receiver has an account, enter email.)</FormLabel>
 
                 <FormControl>
-                  <Input placeholder="Receiver Email" {...field} required={true} />
+                  <Input placeholder="Receiver Email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -164,6 +171,7 @@ const ParcelRequest = () => {
             )}
           />
 
+          {/* Division Select */}
           <FormField
             control={form.control}
             name="division"
@@ -171,14 +179,23 @@ const ParcelRequest = () => {
               <FormItem className="w-full">
                 <FormLabel>Division</FormLabel>
                 <FormControl>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(value); // store division name
+                      setSelectedDivision(value); // store division name for filtering
+                      setSelectedDistrict("");
+                      form.setValue("city", "");
+                      form.setValue("area", "");
+                    }}
+                    defaultValue={field.value}
+                  >
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select division" />
+                      <SelectValue placeholder="Select Division" />
                     </SelectTrigger>
                     <SelectContent>
-                      {divisions.map((div) => (
-                        <SelectItem key={div.id} value={div.name}>
-                          {div.name}
+                      {divisions.map((division) => (
+                        <SelectItem key={division.id} value={division.name}>
+                          {division.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -189,18 +206,69 @@ const ParcelRequest = () => {
             )}
           />
 
+          {/* District Select */}
           <FormField
             control={form.control}
             name="city"
-            render={({field}) => (
-              <FormItem>
-                <FormLabel>City</FormLabel>
-                <FormControl>
-                  <Input placeholder="Describe the parcel..." {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            render={({field}) => {
+              const filteredDistricts = districts.filter((dist) => dist.division_id === divisions.find((d) => d.name === selectedDivision)?.id);
+              return (
+                <FormItem className="w-full">
+                  <FormLabel>District</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={(value) => {
+                        field.onChange(value); // store district name
+                        setSelectedDistrict(value); // store district name for filtering upazilas
+                        form.setValue("area", "");
+                      }}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select District" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {filteredDistricts.map((dist) => (
+                          <SelectItem key={dist.id} value={dist.name}>
+                            {dist.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
+          />
+
+          {/* Upazila Select */}
+          <FormField
+            control={form.control}
+            name="upazila"
+            render={({field}) => {
+              const filteredUpazilas = upazilas.filter((upa) => upa.district_id === districts.find((d) => d.name === selectedDistrict)?.id);
+              return (
+                <FormItem className="w-full">
+                  <FormLabel>Upazila</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select Upazila" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {filteredUpazilas.map((upa) => (
+                          <SelectItem key={upa.id} value={upa.name}>
+                            {upa.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
           />
 
           <FormField
@@ -210,7 +278,7 @@ const ParcelRequest = () => {
               <FormItem>
                 <FormLabel>Area</FormLabel>
                 <FormControl>
-                  <Input placeholder="Describe the parcel..." {...field} />
+                  <Input placeholder="Enter receiver area..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
