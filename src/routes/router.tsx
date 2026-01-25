@@ -19,7 +19,10 @@ import TrackingParcel from "@/pages/TrackingParcel";
 import Success from "@/pages/Success";
 import Home from "@/pages/Home";
 import PrivacyPage from "@/components/modules/home/Privacy";
-import Faq from "@/pages/home/Faq";
+import Faq from "@/pages/web-pages/Faq";
+import TermsAndConditions from "@/pages/web-pages/TermsAndConditions";
+import Team from "@/pages/web-pages/Team";
+import {Contact} from "@/pages/web-pages/Contact";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +36,9 @@ const router = createBrowserRouter([
       {path: "/tracking-parcel", Component: TrackingParcel},
       {path: "/privacy", Component: PrivacyPage},
       {path: "/faq", Component: Faq},
+      {path: "/terms-and-condition", Component: TermsAndConditions},
+      {path: "/team", Component: Team},
+      {path: "/contact", Component: Contact},
     ],
   },
   {

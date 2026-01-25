@@ -16,14 +16,15 @@ const defaultSections = [
   {
     title: "Product",
     links: [
+      {name: "About", href: "/about-us"},
       {name: "FAQ", href: "/faq"},
     ],
   },
   {
     title: "Company",
     links: [
-      {name: "About", href: "/about-us"},
-      {name: "Team", href: "/"},
+      {name: "Team", href: "/team"},
+      {name: "Terms and Conditions", href: "/terms-and-condition"},
     ],
   },
 ];
@@ -35,7 +36,7 @@ const defaultSocialLinks = [
 ];
 
 const defaultLegalLinks = [
-  {name: "Terms and Conditions", href: "/"},
+  //
   {name: "Privacy Policy", href: "/privacy"},
 ];
 
@@ -70,7 +71,7 @@ const Footer = ({
           <div className="grid w-full gap-6 md:grid-cols-3 lg:gap-20">
             {sections.map((section, sectionIdx) => (
               <div key={sectionIdx}>
-                <h3 className="mb-4 font-bold max-md:mb-2">Product</h3>
+                <h3 className="mb-4 font-bold max-md:mb-2">{section.title}</h3>
                 <ul className="text-muted-foreground space-y-3 text-sm max-md:space-y-1">
                   {section.links.map((link, linkIdx) => (
                     <li key={linkIdx} className="hover:text-primary font-medium">
@@ -88,9 +89,7 @@ const Footer = ({
           <ul className="order-1 flex flex-col gap-2 md:order-2 md:flex-row">
             {legalLinks.map((link, idx) => (
               <li key={idx} className="hover:text-primary">
-                <Link to={link.href}>
-                  {link.name}
-                </Link>
+                <Link to={link.href}>{link.name}</Link>
               </li>
             ))}
           </ul>
