@@ -105,8 +105,8 @@ const Parcels = () => {
   if (isLoading) return <LoadingBtn></LoadingBtn>;
 
   return (
-    <div className="container mx-auto my-10">
-      <div className="mb-4 min-w-sm flex gap-2">
+    <div className="container mx-auto md:space-y-5 space-y-3 md:mt-5 mt-2">
+      <div className="min-w-sm flex gap-2">
         <Input
           type="text"
           placeholder="Filter by TransactionId"
@@ -198,7 +198,7 @@ const Parcels = () => {
         </TableBody>
       </Table>
 
-      <div className="mt-5">
+      <div>
         {totalPage > 1 && (
           <div>
             <Pagination>

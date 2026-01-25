@@ -57,8 +57,8 @@ const UserStats = () => {
   if (!stats) return <h2 className="my-10 text-center">No stats available</h2>;
 
   return (
-    <section className="">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 my-10">
+    <section className="md:space-y-10 space-y-5 md:p-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -125,7 +125,7 @@ const UserStats = () => {
         ))}
       </div>
 
-      <div className="flex gap-10">
+      <div className="flex md:gap-10 gap-5">
         {/* Update Role Form */}
         <Card className="flex-1">
           <CardHeader>

@@ -104,10 +104,10 @@ const ParcelStats = () => {
   if (isLoading || parcelLoading) return <LoadingBtn></LoadingBtn>;
 
   return (
-    <div>
-      <div>
+    <section className="md:p-5">
+      <div className="space-y-5">
         <div>
-          <Card className="min-w-sm m-5">
+          <Card className="min-w-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <ReceiptText size={20} /> Total Payments
@@ -118,7 +118,7 @@ const ParcelStats = () => {
         </div>
 
         <div className="flex flex-wrap gap-5">
-          <div className="flex gap-10 w-full m-5">
+          <div className="flex gap-10 w-full">
             <Table className="border">
               <TableHeader>
                 <TableRow>
@@ -236,7 +236,7 @@ const ParcelStats = () => {
         </Table>
       </div>
 
-      <div className="my-10 w-3/5 mx-auto">
+      <div className="my-10 mx-auto max-w-6xl">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
             <FormField
@@ -353,7 +353,7 @@ const ParcelStats = () => {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 
